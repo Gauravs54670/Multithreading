@@ -1,8 +1,9 @@
-public class RaceCondition {
+
+public class SynchronizedRaceCondition {
     public static void main(String[] args) {
-        Counter counter = new Counter();
+        Incrementer counter = new Incrementer();
         Runnable task = () -> {
-            for(int i = 1; i<=1000; i++)
+            for(int i = 1; i<=10000; i++)
                 counter.increment();
         };
         Thread t1 = new Thread(task);
@@ -13,12 +14,12 @@ public class RaceCondition {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Count of counter is " + Counter.counter);
+        System.out.println("Synchronized count is " + Incrementer.counter);
     }
 }
-class Counter {
+class Incrementer {
     public static int counter = 0;
-     public void increment() {
+    synchronized public void increment() {
         counter += 1;
     }
 }
